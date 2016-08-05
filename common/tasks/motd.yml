@@ -1,0 +1,9 @@
+---
+
+ # Déploiement du fichier /etc/motd
+
+ - name: déploiement du /etc/motd
+   template:
+     src=motd
+     dest=/etc/motd
+     mode=0644 owner=root group=root

@@ -1,2 +1,11 @@
 ---
-# tasks file for common
+# inclusion des tâches communes
+# Attention : - def_env devrait toujours être premier !
+#             - ne mettre des tâches utilisant les
+#               variables d'environnement (dev, ...) que
+#               s'il s'agit de tâches systèmes devant
+#               être définies partout !
+
+  - include: def_env.yml
+#  - include: logrotate.yml
+  - include: motd.yml

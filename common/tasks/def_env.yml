@@ -1,0 +1,4 @@
+---
+ - name: renseignement du booleen serveur_lan
+   set_fact:
+     serveur_lan: "{{ ansible_hostname | match('[a-z][a-z][cm][cm12]i[0-9]{3}') or ansible_hostname | match('[a-z]i[0-9]{4}[0-9]?[a-z]{2}') }}"
