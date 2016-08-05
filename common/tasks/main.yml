@@ -7,5 +7,5 @@
 #               être définies partout !
 
   - include: def_env.yml
-#  - include: logrotate.yml
+  - include: logrotate.yml
   - include: motd.yml
