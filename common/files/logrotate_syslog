@@ -1,0 +1,22 @@
+# =====================================================================
+#             Gestion des logs normalisées AG2RLM
+# ---------------------------------------------------------------------
+#
+#  Fichier de configuration Syslog.
+#
+#  Seules les valeurs différentes de celles définies dans le
+#  logrotate.conf sont mentionnées.
+#
+# =====================================================================
+
+/var/log/cron
+/var/log/maillog
+/var/log/messages
+/var/log/secure
+/var/log/spooler
+{
+    sharedscripts
+    postrotate
+        /bin/kill -HUP `cat /var/run/syslogd.pid 2> /dev/null` 2> /dev/null || true
+    endscript
+}

@@ -1,0 +1,52 @@
+---
+
+ - name: contrôle de l'installation de logrotate
+ 
+   # si le fichier de conf n'existe pas, c'est que logrotate
+   # n'est pas installé
+   stat: path=/etc/logrotate.conf
+   register: st
+ - fail: msg="Logrotate n'est pas installé / configuré !"
+   when: st.stat.exists == False
+
+ - name: fichier de configuration général
+   copy:
+
+     # sans précision de chemin le fichier est pris dans le répertoire
+     # file du role
+     src=logrotate.conf
+     dest=/etc/logrotate.conf
+     mode=0644 owner=root group=root
+
+
+# pour le moment, traitement du cas RHEL...
+
+ - set_fact:
+     is_redhat: ansible_os_family == "RedHat"
+
+
+ # Logs système
+ - include: include/logrotate_sys_rhel.yml
+   when: is_redhat
+
+
+ # Apache
+ - name: rotation des logs Apache Httpd
+   stat: path=/usr/sbin/httpd
+   register: st
+ - copy:
+     src=logrotate_httpd
+     dest=/etc/logrotate.d/httpd
+     mode=0644 owner=root group=root
+   when: st.stat.exists and is_redhat
+
+
+ # Tomcat
+ - name: rotation des logs Tomcat
+   stat: path=/usr/tomcat/bin/setenv.sh
+   register: st
+ - copy:
+     src=logrotate_tomcat
+     dest=/etc/logrotate.d/tomcat
+     mode=0644 owner=root group=root
+   when: st.stat.exists and is_redhat

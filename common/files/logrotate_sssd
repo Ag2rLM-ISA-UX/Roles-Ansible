@@ -1,0 +1,17 @@
+# =====================================================================
+#             Gestion des logs normalisées AG2RLM
+# ---------------------------------------------------------------------
+#
+#  Fichier de configuration SSSD.
+#
+#  Seules les valeurs différentes de celles définies dans le
+#  logrotate.conf sont mentionnées.
+#
+# =====================================================================
+
+/var/log/sssd/*.log {
+        sharedscripts
+        postrotate
+                /bin/kill -HUP `cat /var/run/sssd.pid  2>/dev/null`  2> /dev/null || true
+        endscript
+}

@@ -1,0 +1,29 @@
+---
+
+# Configuration des logs système RHEL
+
+ # Ssd
+ - name: rotation des fichiers Sssd
+   stat: path=/etc/sssd/sssd.conf
+   register: st
+ - copy:
+     src="{{ role_path }}/files/logrotate_sssd"
+     dest=/etc/logrotate.d/sssd
+     mode=0644 owner=root group=root
+   when: st.stat.exists
+
+ # Yum
+ - name: rotation des fichiers Yum
+   # pas besoin de test, existe forcément en RedHat !
+   copy:
+     src="{{ role_path }}/files/logrotate_yum"
+     dest=/etc/logrotate.d/yum
+     mode=0644 owner=root group=root
+
+ # Syslog
+ - name : rotation des fichiers Syslog
+   # pas besoin de test, existe forcément en RedHat !
+   copy:
+     src="{{ role_path }}/files/logrotate_syslog"
+     dest=/etc/logrotate.d/syslog
+     mode=0644 owner=root group=root
