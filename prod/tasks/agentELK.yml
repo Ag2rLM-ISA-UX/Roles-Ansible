@@ -1,0 +1,13 @@
+---
+
+# Tâche chapeau pour la configuration des agents ELK :
+# - si OS Linux (RHEL) => installation de filebeat
+# - si Aix => installation du logstash forwarder java
+
+
+ # Pour RHEL
+ - include: include/filebeat.yml
+   when: ansible_os_family == "RedHat"
+ 
+ # Pour AIX
+ # todo: récupérer des facts Aix

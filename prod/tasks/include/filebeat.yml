@@ -1,0 +1,34 @@
+---
+
+  # voir dans le wiki l'explication de cette strophe (utilisation / module command)
+  - name: test de l'existence de la clef
+    command: rpm -qi gpg-pubkey-d88e42b4-*
+    register: result
+    changed_when: False
+    always_run: yes
+    ignore_errors: True
+
+  - name: si besoin, récupération et importation de la clef
+    command: rpm --import http://induslinux/GPG-KEY-elasticsearch
+    when: result|failed
+
+  - name: installation du package filebeat
+    yum: name=filebeat state=latest
+
+  - name: déploiement du fichier de configuration
+    template:
+      src=filebeat_tpl.yml
+      dest=/etc/filebeat/filebeat.yml
+      mode=0644 owner=root group=root
+    register: fconf
+
+  - name: redémarrage du démon
+    service:
+      name=filebeat
+      state=restarted
+    when: fconf.changed
+
+  - name: activation au boot
+    service:
+      name=filebeat
+      enabled=yes
