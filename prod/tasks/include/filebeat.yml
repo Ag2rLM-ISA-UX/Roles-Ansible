@@ -15,9 +15,12 @@
   - name: installation du package filebeat
     yum: name=filebeat state=latest
 
+    # attention : comme la tache est dans le répertoire include, 
+    # l'appel direct au nom du fichier ne fonctionne pas (Ansible
+    # fait la recherche dans ../tasks/templates au lieu de ../templates)
   - name: déploiement du fichier de configuration
     template:
-      src=filebeat_tpl.yml
+      src={{role_path}}/templates/filebeat_tpl.yml
       dest=/etc/filebeat/filebeat.yml
       mode=0644 owner=root group=root
     register: fconf
