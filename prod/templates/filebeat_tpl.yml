@@ -1,0 +1,123 @@
+filebeat:
+  prospectors:
+    -
+      paths:
+        - /var/log/tomcat/*.log
+      encoding: plain
+      input_type: log
+      fields:
+        appserver: tomcat
+        application: [{{ applications }}]
+        env: {{ ag2r_env }}
+      document_type: log4j
+      fields_under_root: true
+
+    -
+      paths:
+        - /var/log/httpd/*access.log
+      encoding: plain
+      input_type: log
+      fields:
+        service: httpd
+        application: [{{ applications }}]
+        env: {{ ag2r_env }}
+      document_type: http_access
+      fields_under_root: true
+
+    -
+      paths:
+        - /var/log/httpd/*error.log
+      encoding: plain
+      input_type: log
+      fields:
+        service: httpd
+        application: [{{ applications }}]
+        env: {{ ag2r_env }}
+      document_type: http_error
+      fields_under_root: true
+
+    -
+      paths:
+        - /var/log/HTTPServer/*access.log
+      encoding: plain
+      input_type: log
+      fields:
+        service: websphere
+        application: [{{ applications }}]
+        env: {{ ag2r_env }}
+      document_type: http_access
+      fields_under_root: true
+
+    -
+      paths:
+        - /var/log/HTTPServer/*error.log
+      encoding: plain
+      input_type: log
+      fields:
+        service: websphere
+        application: [{{ applications }}]
+        env: {{ ag2r_env }}
+      document_type: http_error
+      fields_under_root: true
+
+    -
+      paths:
+        - /var/log/WebSphere/AppSrv01/*/*.log
+        - /var/log/WebSphere/AppSrv01/*.log
+      encoding: plain
+      input_type: log
+      fields:
+        application: [{{ applications }}]
+        env: {{ ag2r_env }}
+      document_type: websphere_app
+      fields_under_root: true
+
+    -
+      paths:
+        - /var/log/messages
+      encoding: plain
+      input_type: log
+      fields:
+        application: [{{ applications }}]
+        env: {{ ag2r_env }}
+      document_type: syslog
+      fields_under_root: true
+
+    -
+      paths:
+        - /var/log/secure
+      encoding: plain
+      input_type: log
+      fields:
+        application: [{{ applications }}]
+        env: {{ ag2r_env }}
+      document_type: syslog
+      fields_under_root: true
+
+    -
+      paths:
+        - /var/log/ldap/ldap.log
+      encoding: plain
+      input_type: log
+      document_type: syslog
+      fields:
+        service: "ldap"
+        application: [{{ applications }}]
+        env: {{ ag2r_env }}
+      fields_under_root: true
+
+  registry_file: /var/lib/filebeat/registry
+
+output:
+  logstash:
+    hosts: ["lpc2i563:5044"]
+
+shipper:
+
+logging:
+  to_syslog: false
+  to_files: true
+  files:
+    path: /var/log/filebeat
+    name: filebeat.log
+  level: info
