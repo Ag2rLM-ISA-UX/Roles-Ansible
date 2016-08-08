@@ -1,0 +1,15 @@
+# =====================================================================
+#             Gestion des logs normalisées AG2RLM
+# ---------------------------------------------------------------------
+#
+#  Fichier de configuration YUM.
+#
+#  Seules les valeurs différentes de celles définies dans le
+#  logrotate.conf sont mentionnées.
+#
+# =====================================================================
+
+/var/log/yum.log {
+    yearly
+    create 0600 root root
+}

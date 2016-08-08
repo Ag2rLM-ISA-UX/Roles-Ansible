@@ -1,0 +1,16 @@
+# =====================================================================
+#             Gestion des logs normalisées AG2RLM
+# ---------------------------------------------------------------------
+#
+#  Fichier de configuration HTTPD.
+#
+#  Seules les valeurs différentes de celles définies dans le
+#  logrotate.conf sont mentionnées.
+#
+# =====================================================================
+
+/var/log/httpd/*log {
+    postrotate
+        /sbin/service httpd reload > /dev/null 2>/dev/null || true
+    endscript
+}

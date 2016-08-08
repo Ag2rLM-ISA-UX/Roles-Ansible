@@ -1,0 +1,14 @@
+# =====================================================================
+#             Gestion des logs normalisées AG2RLM
+# ---------------------------------------------------------------------
+#
+#  Fichier de configuration TOMCAT.
+#
+#  Seules les valeurs différentes de celles définies dans le
+#  logrotate.conf sont mentionnées.
+#
+# =====================================================================
+
+/var/log/tomcat/*.log /var/log/tomcat/*.out /var/log/tomcat/*.txt {
+        copytruncate
+}
