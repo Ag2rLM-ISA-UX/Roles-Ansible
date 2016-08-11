@@ -1,0 +1,24 @@
+# On prends le parti de rechercher les éventuelles mises à jour à chaque 
+# exécution de ce script : comme collectd est dans le repository Epel, 
+# il n'est pas mis à jour via les campagnes d'update 
+
+- name: activation du repo Epel
+   rhn_channel: 
+     name=epel6-rhel_ls-x86_64 
+     sysname={{ansible_hostname}}
+     url=https://{{serveur_packages}}/rpc/api
+     user=script
+     password=0script0
+     state=present
+     
+ - name: installation de collectd
+   yum: name=collectd state=latest
+   
+ - name: désactivation du repo Epel
+   rhn_channel: 
+     name=epel6-rhel_ls-x86_64 
+     sysname={{ansible_hostname}}
+     url=https://{{serveur_packages}}/rpc/api
+     user=script
+     password=0script0
+     state=absent
