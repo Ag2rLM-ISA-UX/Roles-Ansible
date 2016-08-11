@@ -3,7 +3,9 @@
    set_fact:
      serveur_lan: "{{ ansible_hostname | match('[a-z][a-z][cm][cm12]i[0-9]{3}') or ansible_hostname | match('[a-z]i[0-9]{4}[0-9]?[a-z]{2}') }}"
      
+     
  - name: renseignement du serveur de packages
    set_fact:
      serveur_packages: "spacewalk"
      when: ansible_os_family == "RedHat" && (ansible_distribution_major_version == "6" || ansible_distribution_major_version == "5")
+     
