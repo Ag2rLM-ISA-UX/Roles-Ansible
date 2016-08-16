@@ -9,7 +9,8 @@
   - include: def_env.yml
   
   # la gestion dela rotation des logs ne se fait que sur Linux
-  - include: logrotate.yml
-    when: ansible_system == "Linux"
+#  - include: logrotate.yml
+#    when: ansible_system == "Linux"
     
-  - include: motd.yml
+#  - include: motd.yml
+  - include: collectd.yml
